@@ -21,12 +21,12 @@ drop table if exists Prispiva CASCADE;
 drop table if exists Zapujcuje CASCADE;
 drop table if exists Hlavni_Osetrovatel  CASCADE;
 
+
+
 /**********************   Osetrovatel **********************/
 -- Osetrovatel
 CREATE TABLE Osetrovatel (
   os_cislo SMALLINT NOT NULL AUTO_INCREMENT,
-  username VARCHAR(40),
-  password VARCHAR(255),
   jmeno VARCHAR(20),
   primeni VARCHAR(20),
   datum_narozeni DATE,
@@ -36,17 +36,33 @@ CREATE TABLE Osetrovatel (
 
 
   CONSTRAINT PK_os_cislo PRIMARY KEY (os_cislo)
-
-
 );
 
-INSERT INTO Osetrovatel VALUES (NULL, 'Ant', md5('1'), 'Antonín', 'Novotný', '1965-02-15', 'Praha', 'Nová 957', 'Vysokoškolské' );
-INSERT INTO Osetrovatel VALUES (NULL, 'Jos', md5('1'), 'Josef', 'Vomáčka', '1980-12-30', 'Brno', 'Cejl 8', 'Vysokoškolské' );
-INSERT INTO Osetrovatel VALUES (NULL, 'Bed', md5('1'), 'Bedřich', 'Nebojácný', '1950-06-04', 'Vyškov', 'Za lesem 5', 'Středoškolské' );
-INSERT INTO Osetrovatel VALUES (NULL, 'Jar', md5('1'), 'Jaromír', 'Kolář','1976-11-25','Praha','Hlavní 98/10','Vysokoškolské');
-INSERT INTO Osetrovatel VALUES (NULL, 'Gab', md5('1'), 'Gabriela', 'Soukalová', '1989-11-01' , 'Jablonec nad Nisou', 'Biatlonská 26', 'Vysokoškolské');
-INSERT INTO Osetrovatel VALUES (NULL, 'Maa', md5('1'), 'Martina', 'Záblová', '1988-07-31' , 'Louny', 'Nová 199', 'Vysokoškolské');
-INSERT INTO Osetrovatel VALUES (NULL, 'Mar', md5('1'), 'Martin', 'Jásal', '1990-10-31' , 'Brno', 'Vánoční 199', 'Vysokoškolské');
+INSERT INTO Osetrovatel VALUES (NULL, 'Antonín', 'Novotný', '1965-02-15', 'Praha', 'Nová 957', 'Vysokoškolské' );
+INSERT INTO Osetrovatel VALUES (NULL, 'Josef', 'Vomáčka', '1980-12-30', 'Brno', 'Cejl 8', 'Vysokoškolské' );
+INSERT INTO Osetrovatel VALUES (NULL, 'Bedřich', 'Nebojácný', '1950-06-04', 'Vyškov', 'Za lesem 5', 'Středoškolské' );
+INSERT INTO Osetrovatel VALUES (NULL, 'Jaromír', 'Kolář','1976-11-25','Praha','Hlavní 98/10','Vysokoškolské');
+INSERT INTO Osetrovatel VALUES (NULL, 'Gabriela', 'Soukalová', '1989-11-01' , 'Jablonec nad Nisou', 'Biatlonská 26', 'Vysokoškolské');
+INSERT INTO Osetrovatel VALUES (NULL, 'Martina', 'Záblová', '1988-07-31' , 'Louny', 'Nová 199', 'Vysokoškolské');
+INSERT INTO Osetrovatel VALUES (NULL, 'Martin', 'Jásal', '1990-10-31' , 'Brno', 'Vánoční 199', 'Vysokoškolské');
+
+CREATE TABLE Uzivatel (
+  pk SMALLINT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(40) UNIQUE NOT NULL,
+  password VARCHAR(40) NOT NULL,
+  privileges SMALLINT NOT NULL,
+  pk_osetrovatel SMALLINT,
+
+  CONSTRAINT PK_pk PRIMARY KEY (pk),
+
+  CONSTRAINT FK_uzivatel FOREIGN KEY (pk_osetrovatel)
+  REFERENCES Osetrovatel(os_cislo)
+);
+
+INSERT INTO Uzivatel VALUES (NULL, 'ant', '1', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 1));
+INSERT INTO Uzivatel VALUES (NULL, 'jos', '1', '2', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2));
+INSERT INTO Uzivatel VALUES (NULL, 'admin', 'admin', '3', null);
+
 
 
 
