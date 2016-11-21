@@ -115,14 +115,14 @@ CREATE TABLE Vybeh (
   CONSTRAINT PK_cislo_vybehu PRIMARY KEY (cislo_vybehu)
 );
 
-INSERT INTO Vybeh VALUES (1, 'Aqarium', 10, 30, '2020-10-15');
-INSERT INTO Vybeh VALUES (2, 'Savana',   3, 60, '1999-09-08');
-INSERT INTO Vybeh VALUES (3, 'Arktik',  5, 20, '2001-12-17' );
-INSERT INTO Vybeh VALUES (5, 'Terarium', NULL , 30, NULL);
-INSERT INTO Vybeh VALUES (4, 'Poušť', 10, 45, '2005-01-01');
-INSERT INTO Vybeh VALUES (6, 'Prales', 10, 35, '2015-04-12');
-INSERT INTO Vybeh VALUES (7, 'Tajga', 3, 20, '2013-06-26');
-INSERT INTO Vybeh VALUES (8, 'Vodní nádrž', 3, 20, '2015-08-15');
+INSERT INTO Vybeh VALUES (NULL, 'Aqarium', 10, 30, '2020-10-15');
+INSERT INTO Vybeh VALUES (NULL, 'Savana',   3, 60, '1999-09-08');
+INSERT INTO Vybeh VALUES (NULL, 'Arktik',  5, 20, '2001-12-17' );
+INSERT INTO Vybeh VALUES (NULL, 'Terarium', NULL , 30, NULL);
+INSERT INTO Vybeh VALUES (NULL, 'Poušť', 10, 45, '2005-01-01');
+INSERT INTO Vybeh VALUES (NULL, 'Prales', 10, 35, '2015-04-12');
+INSERT INTO Vybeh VALUES (NULL, 'Tajga', 3, 20, '2013-06-26');
+INSERT INTO Vybeh VALUES (NULL, 'Vodní nádrž', 3, 20, '2015-08-15');
 
 -- Pomucky
 CREATE TABLE Pomucky (
@@ -175,7 +175,7 @@ INSERT INTO Opravy VALUES ((SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 
 /**********************  Zvire ****************************/
 -- Zvire
 CREATE TABLE Zvire (
-  kod_zvirete INTEGER,
+  kod_zvirete INTEGER NOT NULL AUTO_INCREMENT,
   jmeno VARCHAR(20),
   pohlavi VARCHAR(10) CHECK (pohlavi = 'female' OR pohlavi = 'male' OR pohlavi = 'N/A' or pohlavi = 'hermafrodit'),
   zarazeni VARCHAR(50) NOT NULL,
@@ -196,32 +196,33 @@ CREATE TABLE Zvire (
 
 );
 
-INSERT INTO Zvire VALUES (1, 'Alex', 'male', 'Kočkovité šelmy - Lvi', 150, '2000-01-20', NULL, 'Ala', 'Alan', 'OK', '2010-01-19',
+INSERT INTO Zvire VALUES (NULL, 'Alex', 'male', 'Kočkovité šelmy - Lvi', 150, '2000-01-20', NULL, 'Ala', 'Alan', 'OK', '2010-01-19',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 2));
-INSERT INTO Zvire VALUES (2, 'Lila', 'female', 'Kočkovité šelmy - Lvi', 120, '2002-01-15', NULL, 'Ela', 'Elan', 'OK', '2012-06-22',
+INSERT INTO Zvire VALUES (NULL, 'Lila', 'female', 'Kočkovité šelmy - Lvi', 120, '2002-01-15', NULL, 'Ela', 'Elan', 'OK', '2012-06-22',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 2));
-INSERT INTO Zvire VALUES (3, 'Kometa', 'female', 'Lední medvědi', 10, '2014-12-11', NULL, 'Mako', 'Bako', 'OK', '2015-11-23',
+INSERT INTO Zvire VALUES (NULL, 'Kometa', 'female', 'Lední medvědi', 10, '2014-12-11', NULL, 'Mako', 'Bako', 'OK', '2015-11-23',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 3));
-INSERT INTO Zvire VALUES (4, 'Ondra', 'male', 'Velbloudi', 450, '2012-11-13', NULL, 'Max', 'Kyle', 'OK', '2015-12-19',
+INSERT INTO Zvire VALUES (NULL, 'Ondra', 'male', 'Velbloudi', 450, '2012-11-13', NULL, 'Max', 'Kyle', 'OK', '2015-12-19',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 4));
-INSERT INTO Zvire VALUES (5, 'Otto', 'male', 'Pavouci', 0.010, '2014-10-10', NULL, 'Lenny', 'Tracy', 'OK', '2013-07-20',
+INSERT INTO Zvire VALUES (NULL, 'Otto', 'male', 'Pavouci', 0.010, '2014-10-10', NULL, 'Lenny', 'Tracy', 'OK', '2013-07-20',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 5));
-INSERT INTO Zvire VALUES (6, 'Alžběta', 'female', 'Pavouci', 0.020, '2015-06-30', NULL, NULL, NULL, 'OK', '2013-07-20',
+INSERT INTO Zvire VALUES (NULL, 'Alžběta', 'female', 'Pavouci', 0.020, '2015-06-30', NULL, NULL, NULL, 'OK', '2013-07-20',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 5));
-INSERT INTO Zvire VALUES (8, 'Johny', 'male', 'Lachtan hřivnatý', 340, '1998-06-06', NULL, 'Jimmy', NULL, 'Nemocný', '2016-05-20',
+-- uhynule zvire
+INSERT INTO Zvire VALUES (NULL, 'Marty', 'male', 'Sloni', 1500, '1910-08-07', '1999-12-31', NULL, NULL, 'N/A', '1999-12-30', NULL);
+
+INSERT INTO Zvire VALUES (NULL, 'Johny', 'male', 'Lachtan hřivnatý', 340, '1998-06-06', NULL, 'Jimmy', NULL, 'Nemocný', '2016-05-20',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 8));
-INSERT INTO Zvire VALUES (9, 'Tonny', 'male', 'Lachtan hřivnatý', 320, '1997-10-08', NULL, 'Jimmy', 'Lola', 'OK', '2013-07-20',
+INSERT INTO Zvire VALUES (NULL, 'Tonny', 'male', 'Lachtan hřivnatý', 320, '1997-10-08', NULL, 'Jimmy', 'Lola', 'OK', '2013-07-20',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 8));
-INSERT INTO Zvire VALUES (10, 'Barbara', 'female', 'Lachtan hřivnatý', 250, '1996-10-07', NULL, NULL, 'Satra', 'OK', '2013-07-20',
+INSERT INTO Zvire VALUES (NULL, 'Barbara', 'female', 'Lachtan hřivnatý', 250, '1996-10-07', NULL, NULL, 'Satra', 'OK', '2013-07-20',
   (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 8));
 
 
--- Uhynulá zvířata
-INSERT INTO Zvire VALUES (7, 'Marty', 'male', 'Sloni', 1500, '1910-08-07', '1999-12-31', NULL, NULL, 'N/A', '1999-12-30', NULL);
 
 -- Cizi ZOO
 CREATE TABLE Cizi_zoo (
-  jmeno_zoo  VARCHAR(50),
+  jmeno_zoo  VARCHAR(50) NOT NULL,
   mesto VARCHAR(30) NOT NULL,
   ulice VARCHAR(20) NOT NULL,
   ICO NUMERIC(8,0),
@@ -238,7 +239,7 @@ INSERT INTO Cizi_zoo VALUES ('NYC ZOO', 'New York City', 'Manhattan 150', 0, 0, 
 -- Prispivatel
 
 CREATE TABLE Prispivatel (
-  cislo_prispivatele SMALLINT,
+  cislo_prispivatele SMALLINT NOT NULL AUTO_INCREMENT,
   typ_prispivani VARCHAR(30) NOT NULL CHECK (typ_prispivani = 'Měsíční' OR typ_prispivani = 'Jednorázový' OR typ_prispivani = 'Roční'),
   mesto VARCHAR(30) NOT NULL,
   ulice VARCHAR(20) NOT NULL,
@@ -249,8 +250,8 @@ CREATE TABLE Prispivatel (
 
 );
 
-INSERT INTO Prispivatel VALUES (1, 'Měsíční', 'Brno', 'Cejl 12', 10000, 10000);
-INSERT INTO Prispivatel VALUES (2, 'Jednorázový', 'Praha', 'Brněnská 13', 20000, 20000);
+INSERT INTO Prispivatel VALUES (NULL, 'Měsíční', 'Brno', 'Cejl 12', 10000, 10000);
+INSERT INTO Prispivatel VALUES (NULL, 'Jednorázový', 'Praha', 'Brněnská 13', 20000, 20000);
 
 /*** VZTAHY ***/
 
