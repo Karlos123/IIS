@@ -107,7 +107,7 @@ CREATE TABLE Cizi_zoo (
 
 CREATE TABLE Prispivatel (
   cislo_prispivatele SMALLINT NOT NULL AUTO_INCREMENT,
-  jmeno VARCHAR(30) DEFAULT NULL
+  jmeno VARCHAR(30) DEFAULT NULL,
   typ_prispivani VARCHAR(30) DEFAULT NULL,
   mesto VARCHAR(30) DEFAULT NULL,
   ulice VARCHAR(20) DEFAULT NULL,
@@ -126,8 +126,8 @@ CREATE TABLE Cisti (
     os_cislo SMALLINT,
     cislo_vybehu SMALLINT,
     datum_cisteni date,
-    od DATE NOT NULL,
-    do DATE NOT NULL,
+    od TIME NOT NULL,
+    do TIME NOT NULL,
     stav_po VARCHAR(30),
     PRIMARY KEY(os_cislo, cislo_vybehu)
 );
@@ -138,7 +138,7 @@ CREATE TABLE Krmi (
     datum_krmeni DATE NOT NULL,
     od TIME NOT NULL,
     do TIME NOT NULL,
-    mnozstvi_zradla DECIMAL(8,3) NOT NULL CHECK (mnozstvi_zradla > 0), -- Kg
+    mnozstvi_zradla DECIMAL(8,3), -- Kg
     PRIMARY KEY(os_cislo, kod_zvirete, datum_krmeni, od)
 );
 
@@ -298,7 +298,7 @@ INSERT INTO Cizi_zoo VALUES ('NYC ZOO', 'New York City', 'Manhattan 150', 0, 0, 
 -- Prispivatel
 
 INSERT INTO Prispivatel VALUES (NULL, "Dopravní podnik města Brna", 'Měsíční', 'Brno', 'Cejl 12', 10000, 10000);
-INSERT INTO Prispivatel VALUES (NULL, 'Jednorázový', "Dopravní podnik hlavního města Prahy",  'Praha', 'Brněnská 13', 20000, 20000);
+INSERT INTO Prispivatel VALUES (NULL, "Dopravní podnik hlavního města Prahy", 'Jednorázový', 'Praha', 'Brněnská 13', 20000, 20000);
 
 /*** VZTAHY ***/
 
@@ -321,26 +321,26 @@ INSERT INTO Stara_se VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 
 INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 4),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 1),
                          str_to_date('2015,12,15', '%Y,%m,%d'),
-                         str_to_date('06,30', '%H, %i'),
-                         str_to_date('07,01', '%H, %i'),
+                         time('06:30'),
+                         time('07:01'),
                          'OK');
 INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 5),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 2),
                          str_to_date('2015,12,15', '%Y,%m,%d'),
-                         str_to_date('06,30', '%H,%i'),
-                         str_to_date('07,40', '%H,%i'),
+                         time('06:30'),
+                         time('07:40'),
                           'OK');
 INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 3),
                          str_to_date('2015,12,16', '%Y,%m,%d'),
-                         str_to_date('06,30', '%H,%i'),
-                         str_to_date('07,00', '%H,%i'),
+                         time('06:30'),
+                         time('07:00'),
                           'Potřeba dočistit!');
 INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 8),
                          str_to_date('2016,5,20', '%Y,%m,%d'),
-                         str_to_date('07,30', '%H,%i'),
-                         str_to_date('08,00', '%H,%i'),
+                         time('07:30'),
+                         time('08:00'),
                           'N/A');
 
 
