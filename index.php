@@ -16,6 +16,7 @@
           setcookie('logged', $item['pk'], time()+360, '/');
           $_SESSION['use']=$user;
           $_SESSION['priv']=$item['privileges'];
+          $_SESSION['os_cislo']=$item['pk_osetrovatel'];
           header("Location: ".'homePage.php');
       }
       else

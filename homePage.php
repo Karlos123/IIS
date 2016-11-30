@@ -1,4 +1,4 @@
-<?php
+  <?php
   session_save_path("tmp");
   session_start();
   if(!isset($_SESSION['use']))
@@ -15,7 +15,7 @@
 <head>
 <meta  charset=utf-8>
 <title>ZOOIS</title>
-<link rel="stylesheet" href="homePageStyle.css" type="text/css" >
+<link rel="stylesheet" href="style.css" type="text/css" >
 </head>
 
 
@@ -30,7 +30,7 @@
   </div>
   <div id="header">Home page</div>
   <div id="content">
-    Domu
+     <iframe style="width:100%; height:100%;" src="https://www.moviescreen.cz/wp-content/uploads/usvit-e1405634333988.jpg"></iframe>
   </div>
 
   <!-- Side bar -->

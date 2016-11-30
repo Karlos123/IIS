@@ -1,8 +1,8 @@
--- PROJEKT DO PREDMETU IDS ---
+-- PROJEKT DO PREDMETU IIS ---
 
 -- Autori: Karel Jiranek, Frantisek Kropac
 -- Loginy: xjiran00, xkropa06
--- Datum: 12. 3. 2015
+-- Datum: 30. 11. 2016
 -- Zadani: zoologicka zahrada
 
 SET NAMES 'utf8';
@@ -61,18 +61,18 @@ CREATE TABLE Vybeh (
   typ VARCHAR(50) NOT NULL,
   max_zvirat SMALLINT DEFAULT '1',
   cas_na_cisteni INT DEFAULT '10', -- minut
-  otevren DATE DEFAULT '2000-10-10',
+  otevren DATE DEFAULT NULL,
   PRIMARY KEY (cislo_vybehu)
 );
 
 CREATE TABLE Pomucky (
-  cislo_vybehu SMALLINT,
-  jmeno_pomucky VARCHAR(20),
+  cislo_vybehu SMALLINT DEFAULT NULL,
+  jmeno_pomucky VARCHAR(20) DEFAULT NULL,
   PRIMARY KEY (cislo_vybehu, jmeno_pomucky)
 );
 
 CREATE TABLE Opravy (
-  cislo_vybehu SMALLINT,
+  cislo_vybehu SMALLINT DEFAULT NULL,
   ev_opravy VARCHAR(20) DEFAULT 'oprava1', -- evdence opravy
   ucel_opravy VARCHAR(100) NOT NULL,
   datum_opravy DATE NOT NULL,
@@ -117,28 +117,28 @@ CREATE TABLE Prispivatel (
 );
 
 CREATE TABLE Stara_se (
-    os_cislo SMALLINT,
-    kod_zvirete INTEGER,
+    os_cislo SMALLINT DEFAULT NULL,
+    kod_zvirete INTEGER DEFAULT NULL,
     PRIMARY KEY(os_cislo, kod_zvirete)
 );
 
 CREATE TABLE Cisti (
-    os_cislo SMALLINT,
-    cislo_vybehu SMALLINT,
-    datum_cisteni date,
-    od TIME NOT NULL,
-    do TIME NOT NULL,
-    stav_po VARCHAR(30),
-    PRIMARY KEY(os_cislo, cislo_vybehu)
+    os_cislo SMALLINT DEFAULT NULL,
+    cislo_vybehu SMALLINT DEFAULT NULL,
+    datum_cisteni DATE DEFAULT NULL,
+    od TIME DEFAULT NULL,
+    do TIME DEFAULT NULL,
+    stav_po VARCHAR(30) DEFAULT NULL,
+    PRIMARY KEY(os_cislo, cislo_vybehu, datum_cisteni, od)
 );
 
 CREATE TABLE Krmi (
-    os_cislo SMALLINT,
-    kod_zvirete INT,
-    datum_krmeni DATE NOT NULL,
-    od TIME NOT NULL,
-    do TIME NOT NULL,
-    mnozstvi_zradla DECIMAL(8,3), -- Kg
+    os_cislo SMALLINT DEFAULT NULL,
+    kod_zvirete INT DEFAULT NULL,
+    datum_krmeni DATE DEFAULT NULL,
+    od TIME DEFAULT NULL,
+    do TIME DEFAULT NULL,
+    mnozstvi_zradla DECIMAL(8,3) DEFAULT NULL, -- Kg
     PRIMARY KEY(os_cislo, kod_zvirete, datum_krmeni, od)
 );
 
@@ -216,8 +216,13 @@ INSERT INTO Osetrovatel VALUES (NULL, 'Martin', 'Jásal', '1990-10-31' , 'Brno',
 
 
 INSERT INTO Uzivatel VALUES (NULL, 'ant', '1', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 1));
-INSERT INTO Uzivatel VALUES (NULL, 'jos', '1', '2', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2));
-INSERT INTO Uzivatel VALUES (NULL, 'admin', 'admin', '3', null);
+INSERT INTO Uzivatel VALUES (NULL, 'jos', '2', '2', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2));
+INSERT INTO Uzivatel VALUES (NULL, 'bed', '3', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 3));
+INSERT INTO Uzivatel VALUES (NULL, 'jar', '4', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 4));
+INSERT INTO Uzivatel VALUES (NULL, 'gab', '5', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 5));
+INSERT INTO Uzivatel VALUES (NULL, 'mara','6', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6));
+INSERT INTO Uzivatel VALUES (NULL, 'mar', '7', '1', (SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 7));
+INSERT INTO Uzivatel VALUES (NULL, 'admin', 'kocicka1', '3', null);
 
 
 INSERT INTO Hlavni_Osetrovatel VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2));
@@ -318,25 +323,25 @@ INSERT INTO Stara_se VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 
 
 
 
-INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 4),
+INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 1),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 1),
                          str_to_date('2015,12,15', '%Y,%m,%d'),
                          time('06:30'),
                          time('07:01'),
                          'OK');
-INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 5),
+INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 2),
                          str_to_date('2015,12,15', '%Y,%m,%d'),
                          time('06:30'),
                          time('07:40'),
                           'OK');
-INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
+INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 3),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 3),
                          str_to_date('2015,12,16', '%Y,%m,%d'),
                          time('06:30'),
                          time('07:00'),
                           'Potřeba dočistit!');
-INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
+INSERT INTO Cisti VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2),
                           (SELECT cislo_vybehu FROM Vybeh WHERE cislo_vybehu = 8),
                          str_to_date('2016,5,20', '%Y,%m,%d'),
                          time('07:30'),
@@ -359,7 +364,7 @@ INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2),
                          time('19:30'),
                          time('12:40'),
                          5);
-INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 1),
+INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 3),
                          (SELECT kod_zvirete FROM Zvire WHERE kod_zvirete = 2),
                          str_to_date('2016,12,16', '%Y,%m,%d'),
                          time('11:00'),
@@ -371,19 +376,19 @@ INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 3),
                          time('11:00'),
                          time('11:21'),
                          3);
-INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
+INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 1),
                          (SELECT kod_zvirete FROM Zvire WHERE kod_zvirete = 8),
                          str_to_date('2016,05,15', '%Y,%m,%d'),
                          time('11:00'),
                          time('11:21'),
                          2);
-INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
+INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 3),
                          (SELECT kod_zvirete FROM Zvire WHERE kod_zvirete = 9),
                          str_to_date('2016,2,15', '%Y,%m,%d'),
                          time('11:00'),
                          time('11:21'),
                          2);
-INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 6),
+INSERT INTO Krmi VALUES ((SELECT os_cislo FROM Osetrovatel WHERE os_cislo = 2),
                          (SELECT kod_zvirete FROM Zvire WHERE kod_zvirete = 10),
                          str_to_date('2016,2,15', '%Y,%m,%d'),
                          time('11:00'),
@@ -408,16 +413,3 @@ INSERT INTO Prispiva VALUES ((SELECT cislo_prispivatele FROM Prispivatel WHERE c
 
 INSERT INTO Zapujcuje VALUES ('ZOO Hradec Králové', (SELECT kod_zvirete FROM Zvire WHERE kod_zvirete = 1), '2015-09-01', NULL, 'Rozmnožování');
 INSERT INTO Zapujcuje VALUES ('ZOO Praha', (SELECT kod_zvirete FROM Zvire WHERE kod_zvirete = 2), '2015-10-01', NULL, 'Rozmnožování');
-
-
--- delimiter $$
--- CREATE TRIGGER vybeh_delete BEFORE DELETE ON Vybeh
--- FOR EACH ROW
--- BEGIN
--- UPDATE Zvire SET Zvire.cislo_vybehu=NULL;
--- UPDATE Pomucky SET Pomucky.cislo_vybehu=NULL;
--- UPDATE Cisti SET Cisti.cislo_vybehu=NULL;
--- UPDATE Opravy SET Opravy.cislo_vybehu=NULL;
--- END
--- $$
--- delimiter ;
