@@ -1,7 +1,8 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
     session_save_path("tmp");
-    session_start();if(!isset($_SESSION['use']))
+    session_start();
+    if(!isset($_SESSION['use']))
     {
         header('Location: '. 'error_page.php');
     }

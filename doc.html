@@ -29,30 +29,98 @@
 	</dd>
 	<dt>URL aplikace</dt>
 	<dd><a href="http://www.stud.fit.vutbr.cz/~xkropa06/IIS">http://www.stud.fit.vutbr.cz/~xkropa06/IIS</a></dd>
-	<dd>(pokud má aplikace více vstupních stránek, napi¹te obdobnì dal¹í URL)</dd>
+	<!-- <dd>(pokud má aplikace více vstupních stránek, napi¹te obdobnì dal¹í URL)</dd> -->
 </dl>
 
 <h2>U¾ivatelé systému pro testování</h2>
-<p>Uveïte prosím existující zástupce <strong>v¹ech rolí u¾ivatelù</strong>.</p>
+
 <table>
 <tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-<tr><td>prodavac</td><td>prodavac</td><td>Prodavaè</td></tr>
-<tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+<tr><td>admin</td><td>kocicka1</td><td>Administrátor</td></tr>
+<tr><td>jos</td><td>2</td><td>Hlavní o¹etøovatel</td></tr>
+<tr><td>ant</td><td>1</td><td>O¹etøovatel</td></tr>
 </table>
 
 <h2>Implementace</h2>
-<p>Struèná dokumentace k implementaci, která popisuje, které PHP skripty implementují jednotlivé pøípady pou¾ití uvedené v use-case diagramu z IDS. V pøípadì, ¾e bylo nutno pøi implementaci uèinit zmìny v návrhu, musí být v dokumentaci zdùvodnìny.</p>
+<p>
+Pro implementaci jsme nevyu¾ívali ¾ádné frameworky a ve¹kerá funkcionalita byla vytvoøena pomocí jazykù HTML, PHP, CSS, Javascript a SQL.
+Bylo nutné mírnì upravit databázi - pøidání tabulky Uzivatel, která ukládá informace o u¾ivatelích informaèního systému.
+Jsou implementovány v¹echny mo¾nosti pøípadu u¾ití vytvoøené v rámci projektu do pøedmìtù IUS a IDS.
+</p>
+<table>
+    <tbody>
+        <tr>
+            <td>animals.php</td><td>Zobrazení zvíøat v Zoo.</td>
+        </tr>
+        <tr>
+            <td>animalAdd.php<br>animalEdit.php</td><td>Práce se zvíøaty - pøidání, odebrání a aktualizace polo¾ek.</td>
+        </tr>
+        <tr>
+            <td>assignKeeper.php<br>assignKeeperDo.php</td><td>Pøiøazení o¹etøovatele ke zvíøeti.</td>
+        </tr>
+        <tr>
+            <td>cleanAdd.php<br>cleanEdit.php</td><td>Práce s èi¹tìním výbìhu - naplánování èi¹tìní a editace èi¹tìní.</td>
+        </tr>
+        <tr>
+            <td>contributorAdd.php<br>contributorEdit.php</td><td>Práce s pøispívateli Zoo - pøidání, odebrání a aktualizace polo¾ek.</td>
+        </tr>
+        <tr>
+            <td>contributors.php</td><td>Zobrazení pøispívatelù Zoo.</td>
+        </tr>
+        <tr>
+            <td>db.php</td><td>Skript pro vytvoøení spojení s databází.</td>
+        </tr>
+        <tr>
+            <td>error_page.php</td><td>Chybová stránka.</td>
+        </tr>
+        <tr>
+            <td>fenceAdd.php<br>fenceEdit.php</td><td>Práce s výbìhy - pøidání, odebrání a aktualizace polo¾ek.</td>
+        </tr>
+        <tr>
+            <td>fences.php</td><td> Zobrazení výbìhù v Zoo.</td>
+        </tr>
+        <tr>
+            <td>foodAdd.php<br>foodEdit.php</td><td>Práce s plánováním krmení zvíøete - pøidání, odebrání a aktualizace polo¾ek</td>
+        </tr>
+        <tr>
+            <td>homePage.php</td><td>Domovská stránka</td>
+        </tr>
+        <tr>
+            <td>index.php</td><td>Pøihla¹ovací obrazovka</td>
+        </tr>
+        <tr>
+            <td>logout.php</td><td>Odhlá¹ení u¾ivatele</td>
+        </tr>
+        <tr>
+            <td>personal_schedule.php</td><td>Zobrazení osobního plánu o¹etøovatele - krmení a èi¹tìní výbìhu</td>
+        </tr>
+        <tr>
+            <td>sidebar.php</td><td>Zaji¹»uje zobrazení postranního panelu</td>
+        </tr>
+        <tr>
+            <td>staff.php</td><td>Zobrazení o¹etøovatelù Zoo</td>
+        </tr>
+        <tr>
+            <td>staffAdd.php<br>staffEdit.php</td><td>Práce s o¹etøovateli - pøidání, odebrání a aktualizace polo¾ek</td>
+        </tr>
+    </tbody>
+
+</table>
 
 <h2>Instalace</h2>
+<ol>
+<li>Pøekopírování zdrojových souborù na server</li>
+<li>Vytvoøení slo¾ky tmp s právy zápisu v adresáøi se zdrojovými soubory</li>
+<li>Naplnìní databáze pomocí SQL skriptu xjiran00_xkropa06.sql</li>
+</ol>
 <ul>
-<li>Struènì popi¹te postup instalace na server</li>
-<li>Softwarové po¾adavky (verze PHP apod.)</li>
-<li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+    <li>Pro správnou funkènost stránek není vy¾adován dal¹í software</li>
+    <li>Verze PHP: 5.6.25</li>
+    <li>Verze MySQL: 6.3</li>
 </ul>
 
 <h2>Známé problémy</h2>
-<p>Zde popi¹te, které body zadání (IDS a IIS) nejsou implementovány a z jakého dùvodu. Napø. &bdquo;Z èasových dùvodù nebyla implementována správa u¾ivatelù.&rdquo; Pomù¾ete tím zrychlit opravování, kdy¾ neimplementované funkce nebudeme muset dlouze hledat.</p>
+<p>Tralalalalalaaa</p>
 
 </body>
 </html>
